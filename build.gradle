@@ -1,0 +1,38 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'de.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	testCompile "info.novatec.testit:webtester-core:${webtester_version}"
+
+	// spring-boot-starter-test pulls in org.junit.jupiter:junit-jupiter-api:5.5.2
+	testCompile "info.novatec.testit:webtester-support-junit5:${webtester_version}"
+
+	// spring-boot-starter-test pulls in org.assertj:assertj-core:3.13.2
+	testCompile "info.novatec.testit:webtester-support-assertj3:${webtester_version}"
+
+	testCompile "org.seleniumhq.selenium:selenium-support:${selenium_version}"
+
+	testCompile "org.seleniumhq.selenium:selenium-firefox-driver:${selenium_version}"
+}
+
+test {
+	systemProperty "webdriver.gecko.driver", "C:/path/to/geckodriver-v0.26.0-win64/geckodriver.exe"
+	useJUnitPlatform()
+}
+
